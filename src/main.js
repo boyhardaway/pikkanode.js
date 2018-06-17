@@ -1,8 +1,17 @@
 const Koa = require('koa')
 const koaBody = require('koa-body')
 const serve = require('koa-static')
-
+const render = require("koa-ejs")
+const path = require("path")
 const app = new Koa()
+
+
+render(app, {
+	root: path.join(__dirname, "views"),
+	layout: "template",
+	viewExt: "ejs",
+	cache: false
+  })
 
 const stripPrefix = async (ctx, next) => {
 	if (!ctx.path.startsWith('/-')) {

@@ -1,9 +1,10 @@
-const getHandler = (ctx) => {
-	ctx.body = 'sign in get handler'
+const getHandler = async (ctx) => {
+	// ctx.body = 'sign in get handler'
+	await ctx.render('/signin')
 }
 
 const postHandler = (ctx) => {
-	ctx.body = 'sign in post handler'
+	ctx.body = `<h1>${ctx.request.body.email}</h1><br> <h1>${ctx.request.body.password}</h1>`
 }
 
 module.exports = {
