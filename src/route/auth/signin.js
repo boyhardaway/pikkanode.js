@@ -37,7 +37,7 @@ const postHandler = async (ctx) => {
 	// ctx.session.flash = { success: 'Sign in OK' }
 	// return ctx.redirect('/signin')
 
-	ctx.session.userId = 5125
+	ctx.session.userId = 51257
 	ctx.redirect('/')
 }
 
