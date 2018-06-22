@@ -1,8 +1,11 @@
-<form method="POST"> 
-    <label for="">Email</label>
-    <input type="email" name="email">
-    <br>
-    <label for="">Password</label>
-    <input type="password" name="password">
-    <button>Sign In</button>
+<% if (flash && flash.error) { %>
+    <p style="color: red;"><%= flash.error %></p>
+<% } %>
+<% if (flash && flash.success) { %>
+    <p style="color: green;"><%= flash.success %></p>
+<% } %>
+<form method="POST">
+    Email: <input type="email" name="email"><br>
+    Password: <input type="password" name="password"><br>
+    <button>Sign in</button>
 </form>

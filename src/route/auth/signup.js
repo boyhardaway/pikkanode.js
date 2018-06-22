@@ -13,6 +13,7 @@ const postHandler = async (ctx) => {
  
 	const hashedPassword = await bcrypt.hash(password, 10)
 	const userId = await user.register(email, hashedPassword)
+	
 	// console.log(userId)
 
 	// TODO: handle user id ?

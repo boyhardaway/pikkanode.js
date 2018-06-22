@@ -24,6 +24,7 @@ const postHandler = async (ctx) => {
 	ctx.redirect('/')
 }
 
+
 module.exports = {
 	getHandler,
 	postHandler

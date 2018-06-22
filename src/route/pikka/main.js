@@ -1,8 +1,8 @@
-const { user } = require('../../repository')
+const { picture } = require('../../repository')
 
 const getHandler = async (ctx) => {
 	
-	const rows = await user.findPhotoAll()
+	const rows = await picture.findPhotoAll()
 	let obj = {}
 	obj.photos = rows
 
