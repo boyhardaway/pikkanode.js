@@ -5,7 +5,9 @@
     <p style="color: green;"><%= flash.success %></p>
 <% } %>
 <form method="POST">
-    Email: <input type="email" name="email"><br>
-    Password: <input type="password" name="password"><br>
+    <div class="control">
+        <input class="input" type="email" name="email" placeholder="email">
+        <input class="input" type="password" name="password" placeholder="password">
+    </div>
     <button>Sign in</button>
 </form>

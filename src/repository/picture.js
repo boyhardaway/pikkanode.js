@@ -22,7 +22,16 @@ const findPhotoAll = async () => {
 	return rows
 }
 
+const findPhotoById = async (id) => {	 
+	const [rows] = await pool.query(`
+		select id, caption, created_at, created_by, detail
+		from pictures where id = ?
+	`, id) 
+	return rows
+}
+
 module.exports = { 
 	upload,
-	findPhotoAll
+	findPhotoAll,
+	findPhotoById
 }

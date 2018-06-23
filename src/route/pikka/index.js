@@ -23,7 +23,7 @@ const checkAuth = async (ctx, next) => {
 
 router.get('/upload', checkAuth, upload.getHandler)
 router.post('/upload', upload.postHandler)
-router.get('/',  main.getHandler)
+router.get('/', checkAuth, main.getHandler)
 router.get('/pikka/:id', pikka.getHandler)
 router.post('/pikka/:id/comment', comment.postHandler)
 router.post('/pikka/:id/like', like.postHandler)
