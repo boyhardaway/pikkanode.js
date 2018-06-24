@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 
-const { user } = require('../../repository')
+const { user } = require('../../../repository')
 
 const getHandler = async (ctx) => {
 	// ctx.body = 'sign up get handler'

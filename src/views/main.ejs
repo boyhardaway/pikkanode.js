@@ -1,13 +1,31 @@
-<h3>Hello Pikka</h3> 
-
+ 
+<div class="control">
+  <form id="formSearch"  > 
+    <input class="input" name="val"  placeholder="Search..."> 
+    <button class="button is-link" type="submit">Search</button>
+  </from>
+</div>
 <% for(let i = 0; i < photos.length; i++){ %>
   <% if((i % 4) === 0 || i === 0) { %>
     <div class="row"> 
   <% } %> 
     <div class="column">
-      <img src=<%- `/-/images/${photos[i].id}` %> alt="Norway" style="width:100%"> 
-    </div>
+    <p> <%- photos[i].caption %></p>
+      <a href='<%- `http://localhost:8000/pikka/${photos[i].id}`%>'><img src=<%- `/-/images/${photos[i].id}` %> alt="Norway" style="width:100%"> </a> 
+    </div> 
+    
   <% if(((i % 4) === 0 || i === photos.length) && i !== 0) { %>
     </div> 
   <% } %>   
 <% } %> 
+
+<script>
+  //   $('.input#txtsearch').keypress(function (e) {
+  //     if (e.which == 13) {
+  //       $('form#formSearch').submit()
+  //       alert("AAAA")
+  //     }
+  //   })
+  // })
+
+</script>

@@ -1,7 +1,7 @@
 const uuidv4 = require('uuid/v4')
 const fs = require('fs-extra')
 const path = require('path')
-const { user } = require('../../repository')
+const { picture } = require('../../../repository')
 
 const getHandler = async (ctx) => {
 	// ctx.body = 'upload page'
@@ -19,7 +19,9 @@ const postHandler = async (ctx) => {
 	}
 	const { caption, detail } = ctx.request.body
 	const fileName = uuidv4()
-	await user.upload(fileName, caption, detail)
+	await picture.upload(fileName, caption, detail, ctx.session.userId)
+	console.log('------ctx.session.userId--------')
+	console.log(ctx.session.userId)
 	await fs.copy(ctx.request.files.photo.path, path.join(pictureDir, fileName))
 	ctx.redirect('/')
 }

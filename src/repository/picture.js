@@ -1,14 +1,14 @@
 
 const pool = require('../db') 
 
-const upload = async (filename, caption, detail) => {	 
-
+const upload = async (filename, caption, detail, id) => {	 
+	//console.log(ctx.session.userId)
 	const [ResultSetHeader] = await pool.query(`
 	INSERT INTO pictures
 		(id, caption, created_by, detail) 
 	VALUES 
 		(?, ?, ?, ?)
-	`, [ filename, caption, 20, detail ])
+	`, [ filename, caption, id, detail ])
 }
 
 
@@ -16,9 +16,7 @@ const findPhotoAll = async () => {
 	const [rows] = await pool.query(`
 		select id, caption, created_at, created_by, detail
 		from pictures
-	`)
-	// console.log('===========findPhotoAll===========')
-	// console.log(rows)
+	`) 
 	return rows
 }
 
@@ -30,8 +28,18 @@ const findPhotoById = async (id) => {
 	return rows
 }
 
+const findPhotoByCaption = async (caption) => {	 
+	const [rows] = await pool.query(`
+		select id, caption, created_at, created_by, detail
+		from pictures where caption like ?
+	`, `%${caption}%`) 
+	console.log(`%${caption}%`)
+	return rows
+}
+
 module.exports = { 
 	upload,
 	findPhotoAll,
-	findPhotoById
+	findPhotoById,
+	findPhotoByCaption
 }

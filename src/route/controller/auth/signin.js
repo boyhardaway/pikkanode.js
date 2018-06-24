@@ -1,7 +1,5 @@
 const bcrypt = require('bcrypt')
-const {
-	user
-} = require('../../repository')
+const {user} = require('../../../repository')
  
 
 const getHandler = async (ctx) => {
@@ -17,7 +15,7 @@ const postHandler = async (ctx) => {
 		email,
 		password
 	} = ctx.request.body
-	const [data] = await user.checkSignin(email)
+
 
 	if (!email) { 
 		ctx.session.flash = {
@@ -25,7 +23,12 @@ const postHandler = async (ctx) => {
 		}
 		return ctx.redirect('/signin')
 	}
-
+	const [data] = await user.checkSignin(email)
+	//  console.log(data)
+	if (!data) {
+		ctx.session.flash = { error: 'mail not found' }
+		return ctx.redirect('/signin')
+	}
 	const same = await bcrypt.compare(password, data.password)
 	if (!same) { 
 		ctx.session.flash = {
@@ -37,7 +40,7 @@ const postHandler = async (ctx) => {
 	// ctx.session.flash = { success: 'Sign in OK' }
 	// return ctx.redirect('/signin')
 
-	ctx.session.userId = 51257
+	ctx.session.userId = data.id
 	ctx.redirect('/')
 }
 
