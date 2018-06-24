@@ -11,10 +11,7 @@ const getHandler = async (ctx) => {
 }
 
 const postHandler = async (ctx) => {
-	const {
-		email,
-		password
-	} = ctx.request.body
+	const {email,password} = ctx.request.body
 
 
 	if (!email) { 
@@ -24,7 +21,6 @@ const postHandler = async (ctx) => {
 		return ctx.redirect('/signin')
 	}
 	const [data] = await user.checkSignin(email)
-	//  console.log(data)
 	if (!data) {
 		ctx.session.flash = { error: 'mail not found' }
 		return ctx.redirect('/signin')

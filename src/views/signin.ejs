@@ -5,10 +5,107 @@
     <p style="color: green;"><%= flash.success %></p>
 <% } %>
 
-<form method="POST">
+<!-- <form method="POST">
     <div class="control">
         <input class="input" type="email" name="email" placeholder="email">
         <input class="input" type="password" name="password" placeholder="password">
     </div>
     <button>Sign in</button> 
-</form>
+</form> -->
+ 
+<section class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-4 is-offset-4">
+                        <form class="box" action="" method="POST">
+                            <div class="field">
+                                <label class="label">Email</label>
+                                <div class="control has-icons-left">
+                                    <input class="input is-primary" name="email" type="email" placeholder="Email">
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                </div>
+                            </div>
+    
+                            <div class="field">
+                                <label class="label">Password</label>
+                                <p class="control has-icons-left">
+                                    <input class="input is-primary" name="password" type="password" placeholder="Password">
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control">
+                                    <button class="button is-success"> Login </button>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control">
+                                    <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false"
+                                    data-use-continue-as="true"></div>
+                                    <div id="fb-root"></div>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> 
+
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '2103148063295402',
+            cookie: true,
+            xfbml: true,
+            version: 'v3.0'
+        });
+
+        // FB.getLoginStatus(function (response) {
+        //     console.log(response)
+        // });
+        FB.AppEvents.logPageView();
+        // myCallbackFunc()
+        FB.Event.subscribe('auth.login', myCallbackFunc)
+    }
+
+    function myCallbackFunc(){
+        FB.getLoginStatus(response => {
+            console.log(response)
+            if (response.status === 'connected'){
+                console.log('login Ok') 
+                FB.api('/me?fields=name,id,email,first_name,last_name', res => { 
+                $.ajax({
+                        type: "POST",
+                        url: '/signup',
+                        data: res,
+                        success: function(data){
+                            console.log(data)
+                        }
+                    });
+                })
+            } 
+            else{
+                console.log('Have mot logged in yet')
+            }
+            
+        })
+        //response.authResponse.userID
+    }
+    
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>

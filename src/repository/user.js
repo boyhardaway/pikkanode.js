@@ -1,34 +1,40 @@
 const pool = require('../db')
 
 const register = async (email, password, facebook_user_id, first_name, last_name) => {
- 
+	let res
 	let ResultSetHeader 
-    if (await checkHasEmail(email) < 1){ 
+    if (await checkHasSignup(email) < 1){ 
 	    [ResultSetHeader] = await pool.query(`	
 				INSERT INTO users(email, password,
 				facebook_user_id, firstname, lastname) 
 				VALUES (?, ?,
-						?, ?, ?)  `, 
-			[email, password, facebook_user_id, first_name, last_name]) 
-			console.log(1)
-	}else{ 
-		[ResultSetHeader] = await pool.query(`	
-				Update users 
-				set password = ?,
-				facebook_user_id = ?,
-				firstname = ?,
-				lastname = ? 
-				where email = ? `, 
-			[password, facebook_user_id, first_name, last_name, email]) 
-			console.log(2)
+						?, ?, ?) `, [email, password, facebook_user_id, first_name, last_name])  
+		res = ResultSetHeader.insertId
+	}else{  
+		if (facebook_user_id) { 
+			[ResultSetHeader] = await pool.query(`Update users 
+								set facebook_user_id = ?,
+								firstname = ?,
+								lastname = ? 
+								where email = ? `, [facebook_user_id, first_name, last_name, email])  
+			console.log(ResultSetHeader)
+			res = ResultSetHeader.changedRows
+		}else{
+			[ResultSetHeader] = await pool.query(`Update users 
+								set password = ?
+								where email = ? `, [password, email])
+			console.log(ResultSetHeader)
+			res = ResultSetHeader.changedRows
+		}		
+		// res = ResultSetHeader.changedRows
 	}
-	
+	// console.log(res)
 	// คำสั่ง pool คือ เอา connection มาใช้แล้วเก็บไว้ reusage ไม่ได้ทำลายทิ้ง
 	// ถ้าคำสั่ง getConnection มันจะใช้ตัวเดิม
 	// console.log(ResultSetHeader.insertId)
 	// let [rows] = await pool.query(`select max(u.id) as id from users as u `)
-	console.log(ResultSetHeader)
-	return ResultSetHeader.insertId
+	// console.log(ResultSetHeader)
+	return res
 }
 
 const checkSignin = async (email) => {
@@ -40,9 +46,8 @@ const checkSignin = async (email) => {
 	return rows
 }
 
-async function checkHasEmail(email){
-	const [rows] = await pool.query(`select count(1) as count from users where email = ? `, [email])
-	console.log(parseFloat(rows[0].count))
+async function checkHasSignup(email){
+	const [rows] = await pool.query(`select count(1) as count from users where email = ? and (facebook_user_id = '' or password = '') `, [email]) 
 	return parseFloat(rows[0].count)
 }
 

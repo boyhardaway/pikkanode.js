@@ -14,7 +14,7 @@ const checkAuth = async (ctx, next) => {
 		// 	error: '',
 		// 	success: ''
 		// }
-		return ctx.redirect('/') 
+		return ctx.redirect('/signin') 
 		} 
 	await next()
    }
