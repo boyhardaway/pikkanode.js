@@ -6,3 +6,63 @@
     <input type="password" name="password">
     <button>Sign Up</button>
 </form>
+
+
+<div class="fb-login-button" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false"
+data-use-continue-as="true"></div>
+<div id="fb-root"></div>
+
+
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '2103148063295402',
+            cookie: true,
+            xfbml: true,
+            version: 'v3.0'
+        });
+
+        // FB.getLoginStatus(function (response) {
+        //     console.log(response)
+        // });
+        FB.AppEvents.logPageView();
+        myCallbackFunc()
+        FB.Event.subscribe('auth.login', myCallbackFunc)
+
+    }
+
+    function myCallbackFunc(){
+        FB.getLoginStatus(response => {
+            console.log(response)
+            if (response.status === 'connected'){
+                console.log('login Ok') 
+                FB.api('/me?fields=name,id,email,first_name,last_name', res => { 
+                $.ajax({
+                        type: "POST",
+                        url: '/signup',
+                        data: res,
+                        success: function(data){
+                            console.log(data)
+                        }
+                    });
+                })
+            } 
+            else{
+                console.log('Have mot logged in yet')
+            }
+            
+        })
+        //response.authResponse.userID
+    }
+    
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>

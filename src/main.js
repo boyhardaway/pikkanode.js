@@ -53,14 +53,14 @@ const stripPrefix = async (ctx, next) => {
 	await next()
 }
 
-app.keys = ['supersecret']
+app.keys = ['supersecretboy']
 app.use(session(sessionConfig, app))
 app.use(cors())
-app.use(flash) 
+app.use(flash)
 app.use(koaBody({
 	multipart: true
 }))
 app.use(require('./route'))
 app.use(stripPrefix)
 app.use(serve('public'))
-app.listen(8000)
+app.listen(3000)

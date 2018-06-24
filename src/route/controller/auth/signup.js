@@ -8,17 +8,23 @@ const getHandler = async (ctx) => {
 }
 
 const postHandler = async (ctx) => {
-	const { email, password } = ctx.request.body
-	// TODO: validate email, password
- 
-	const hashedPassword = await bcrypt.hash(password, 10)
-	const userId = await user.register(email, hashedPassword)
-	
+	let userId
+	console.log(ctx.request.body)
+	if (ctx.request.body.id) { 
+		const { id, email, first_name, last_name,  } = ctx.request.body
+		userId = await user.register(email, '', id, first_name, last_name)
+	}else{
+		const { email, password } = ctx.request.body
+		// TODO: validate email, password 
+		const hashedPassword = await bcrypt.hash(password, 10)
+		userId = await user.register(email, hashedPassword, '', '', '')
+	}
+		
+	// ctx.redirect('/signin')
 	// console.log(userId)
-
-	// TODO: handle user id ?
-
-	ctx.redirect('/signin')
+	ctx.body = {
+		'message': 'userId : ' + userId
+	  }
 }
 
 module.exports = {
