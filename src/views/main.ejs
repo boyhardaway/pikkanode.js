@@ -11,7 +11,7 @@
   <% } %> 
     <div class="column">
     <p> <%- photos[i].caption %></p>
-      <a href='<%- `http://localhost:8000/pikka/${photos[i].id}`%>'><img src=<%- `/-/images/${photos[i].id}` %> alt="Norway" style="width:100%"> </a> 
+      <a href=<%- `/pikka/${photos[i].id}`%>><img src=<%- `/-/images/${photos[i].id}` %> alt="Norway" style="width:100%"> </a> 
     </div> 
     
   <% if(((i % 4) === 0 || i === photos.length) && i !== 0) { %>

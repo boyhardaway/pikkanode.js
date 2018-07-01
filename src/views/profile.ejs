@@ -1,0 +1,115 @@
+<% //console.log(profile)%>
+
+<form class="box" action="" method="POST">
+  
+  <div class="field">
+    <label class="label">First Name</label>
+    <div class="control">
+      <input class="input" type="text" name="firstname" placeholder="Firstname" value=<%- profile.firstname%> >
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Last Name</label>
+    <div class="control">
+      <input class="input" type="text" name="lastname" placeholder="Lastname" value=<%- profile.lastname%> >
+    </div>
+  </div>  
+
+  <div class="field">
+    <label class="label">Email</label>
+    <div class="control has-icons-left has-icons-right">
+      <input class="input is-danger" type="email" name="email" placeholder="Email input" value=<%- profile.email%> >
+      <span class="icon is-small is-left">
+        <i class="fas fa-envelope"></i>
+      </span>
+    </div> 
+  </div>
+
+  <div class="field">
+    <label class="label">Password</label>
+    <div class="control">
+      <input class="input" type="text" name="password" >    <!-- placeholder="Password" -->
+    </div>
+  </div> 
+
+  <div class="field">
+    <label class="label">Facebook ID</label>
+    <div class="control">
+      <input class="input" type="text" disabled name="facebook_user_id" placeholder="facebook_user_id" value=<%- profile.facebook_user_id%> >
+    </div>
+  </div>  
+  
+  
+  <div class="field is-grouped">
+    <div class="control">
+      <button class="button is-link">Submit</button>
+    </div>
+    <div class="control">
+      <button class="button is-text">Cancel</button>
+    </div>
+    <div class="field">
+      <p class="control">
+          <fb:login-button size="large" scope="public_profile,email" onlogin=" myCallbackFunc()">Signin with Facebook
+          </fb:login-button>
+      </p>
+    </div>
+    <% if (flashMsg.flash && flashMsg.flash.success) { %>
+      <p style="color: green;"><%= flashMsg.flash.success %></p>
+    <% } %>
+    <% if (flashMsg.flash && flashMsg.flash.error) { %>
+      <p style="color: red;"><%= flashMsg.flash.error %></p>
+    <% } %>
+  </div>
+</from>
+
+
+
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '2103148063295402',
+            cookie: true,
+            xfbml: true,
+            version: 'v3.0'
+        });
+
+        // FB.getLoginStatus(function (response) {
+        //     console.log(response)
+        // });
+        FB.AppEvents.logPageView();
+        // myCallbackFunc()
+        FB.Event.subscribe('auth.login', myCallbackFunc)
+    }
+
+    function myCallbackFunc(){
+        FB.getLoginStatus(function (response) {
+            if (response.status == 'connected') {
+
+                FB.api('/me?fields=name,id,email,first_name,last_name', res => {
+                    $.ajax({
+                        type: "POST",
+                        url: '/signin',
+                        data: res,
+                        success: function (data) {
+                            // // console.log(data)
+                            window.location = '/profile'
+                        }
+                    })
+                })
+            } else
+                console.log('Have not logged in yet')
+        })
+    }
+    
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>

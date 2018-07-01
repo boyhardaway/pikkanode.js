@@ -32,8 +32,7 @@ const findPhotoByCaption = async (caption) => {
 	const [rows] = await pool.query(`
 		select id, caption, created_at, created_by, detail
 		from pictures where caption like ?
-	`, `%${caption}%`) 
-	console.log(`%${caption}%`)
+	`, `%${caption}%`)  
 	return rows
 }
 

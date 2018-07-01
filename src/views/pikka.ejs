@@ -4,13 +4,35 @@
 </div> 
 <div >
 <div >
-<p> <%- photos.caption %></p>
+    <p> <%- photos.caption %></p>
+    <p> <%- photos.id %></p>
 </div >
-<button class="button is-link">Like</button>
+    <button class="button is-link">Like</button>
 </div> 
 <div >
-<textarea rows="4" cols="50"></textarea>
+    <textarea rows="4" cols="50"></textarea>
 </div> 
 </div >
-<button class="button is-link">Comment</button>
-</div> 
+    <button class="button is-link" id="btnComment" onclick="comment()">Comment</button>
+</div>
+
+<script>
+    let photoId =  '<%- photos.id %>}'
+    // $(function() { 
+    //     $("#btnComment").click(function() { 
+    //         console.log(111)
+    //     })
+    // })
+
+    function comment(){ 
+        $.ajax({
+            type: "POST",
+            url: '1/comment',
+            data: photoId,
+            success: function (data) {
+                // console.log(data)
+                // window.location = '/signin'
+            }
+        })
+    }
+</script>

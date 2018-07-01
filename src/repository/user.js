@@ -17,7 +17,7 @@ const register = async (email, password, facebook_user_id, first_name, last_name
 								firstname = ?,
 								lastname = ? 
 								where email = ? `, [facebook_user_id, first_name, last_name, email])  
-			console.log(ResultSetHeader)
+			// console.log(ResultSetHeader)
 			res = ResultSetHeader.changedRows
 		}else{
 			[ResultSetHeader] = await pool.query(`Update users 
@@ -47,12 +47,35 @@ const checkSignin = async (email) => {
 }
 
 async function checkHasSignup(email){
-	const [rows] = await pool.query(`select count(1) as count from users where email = ? and (facebook_user_id = '' or password = '') `, [email]) 
+	const [rows] = await pool.query(`select count(1) as count from users where email = ?`, [email])  // and (facebook_user_id = '' or password = '') 
 	return parseFloat(rows[0].count)
 }
 
+const findUserById = async (id) => {
+	const [rows] = await pool.query(`
+		SELECT id, email, password, created_at, facebook_user_id, firstname, lastname 
+		FROM users 
+		WHERE id = ? or facebook_user_id = ?
+	`, [id, id])
+	return rows
+}
+
+const editProfile = async (email, password, facebook_user_id, first_name, last_name) => {
+ 
+	let ResultSetHeader 
+	[ResultSetHeader] = await pool.query(`Update users 
+						set facebook_user_id = ?,
+						firstname = ?,
+						lastname = ?,
+						password = ?
+						where email = ? `, [facebook_user_id, first_name, last_name, password, email])  
+	console.log(ResultSetHeader) 
+	return ResultSetHeader.changedRows
+}
 
 module.exports = {
 	register,
-	checkSignin
+	checkSignin,
+	findUserById,
+	editProfile
 }

@@ -1,9 +1,4 @@
-<% if (flash && flash.error) { %>
-    <p style="color: red;"><%= flash.error %></p>
-<% } %>
-<% if (flash && flash.success) { %>
-    <p style="color: green;"><%= flash.success %></p>
-<% } %>
+
 
 <!-- <form method="POST">
     <div class="control">
@@ -18,6 +13,12 @@
             <div class="container">
                 <div class="columns">
                     <div class="column is-4 is-offset-4">
+                    <% if (flash && flash.error) { %>
+                        <p style="color: red;"><%= flash.error %></p>
+                    <% } %>
+                    <% if (flash && flash.success) { %>
+                        <p style="color: green;"><%= flash.success %></p>
+                    <% } %>
                         <form class="box" action="" method="POST">
                             <div class="field">
                                 <label class="label">Email</label>
@@ -45,11 +46,17 @@
                             </div>
                             <div class="field">
                                 <p class="control">
+                                    <fb:login-button size="large" scope="public_profile,email" onlogin=" myCallbackFunc()">Signin with Facebook
+                                    </fb:login-button>
+                                </p>
+                            </div>
+                          <!--  <div class="field">
+                                <p class="control">
                                     <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false"
                                     data-use-continue-as="true"></div>
                                     <div id="fb-root"></div>
                                 </p>
-                            </div>
+                            </div> -->
                         </form>
                     </div>
                 </div>
@@ -75,27 +82,23 @@
     }
 
     function myCallbackFunc(){
-        FB.getLoginStatus(response => {
-            console.log(response)
-            if (response.status === 'connected'){
-                console.log('login Ok') 
-                FB.api('/me?fields=name,id,email,first_name,last_name', res => { 
-                $.ajax({
+        FB.getLoginStatus(function (response) {
+            if (response.status == 'connected') {
+
+                FB.api('/me?fields=name,id,email,first_name,last_name', res => {
+                    $.ajax({
                         type: "POST",
-                        url: '/signup',
+                        url: '/signin',
                         data: res,
-                        success: function(data){
-                            console.log(data)
+                        success: function (data) {
+                            // console.log(data)
+                            window.location = '/signin'
                         }
-                    });
+                    })
                 })
-            } 
-            else{
-                console.log('Have mot logged in yet')
-            }
-            
+            } else
+                console.log('Have not logged in yet')
         })
-        //response.authResponse.userID
     }
     
     (function (d, s, id) {
