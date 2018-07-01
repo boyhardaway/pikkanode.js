@@ -53,14 +53,14 @@ const stripPrefix = async (ctx, next) => {
 	await next()
 }
 
-function stupidEncrypt(str, keys) {
-	return "try to encrypt: " + str + keys;
-}
+// function stupidEncrypt(str, keys) {
+// 	return "try to encrypt: " + str + keys;
+// }
 
-function stupidDecrypt(str) {
-	const pieces = str.replace('try to encrypt: ','').replace(keys,'')
-	return pieces;
-}
+// function stupidDecrypt(str) {
+// 	const pieces = str.replace('try to encrypt: ','').replace(keys,'')
+// 	return pieces;
+// }
 
 app.keys = ['supersecretboy']
 app.use(session(sessionConfig, app))

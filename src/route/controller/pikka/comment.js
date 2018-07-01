@@ -1,5 +1,7 @@
+const {picture} = require('../../../repository')
+
 const postHandler = (ctx) => {
-	console.log('Post Comment')
+	console.log(ctx.params.id)
 	
 }
 

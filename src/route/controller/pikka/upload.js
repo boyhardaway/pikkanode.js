@@ -20,12 +20,11 @@ const postHandler = async (ctx) => {
 	const { caption, detail } = ctx.request.body
 	const fileName = uuidv4()
 	await picture.upload(fileName, caption, detail, ctx.session.userId)
-	console.log('------ctx.session.userId--------')
-	console.log(ctx.session.userId)
+	// console.log('------ctx.session.userId--------')
+	// console.log(ctx.session.userId)
 	await fs.copy(ctx.request.files.photo.path, path.join(pictureDir, fileName))
 	ctx.redirect('/')
 }
-
 
 module.exports = {
 	getHandler,

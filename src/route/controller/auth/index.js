@@ -2,6 +2,7 @@ const Router = require('koa-router')
 
 const signIn = require('./signin')
 const signUp = require('./signup')
+const signOut = require('./signout')
 
 const router = new Router()
 
@@ -20,5 +21,6 @@ router.get('/signin', checkIsLogin, signIn.getHandler)
 router.post('/signin', signIn.postHandler)
 router.get('/signup', checkIsLogin, signUp.getHandler)
 router.post('/signup', signUp.postHandler)
+router.post('/signout', signOut.postHandler)
 
 module.exports = router.routes()
