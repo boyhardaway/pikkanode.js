@@ -7,7 +7,7 @@
     <p> <%- photos.caption %></p>
     <p> <%- photos.id %></p>
 </div >
-    <button class="button is-link" id="btnLike" id="btnComment"  onclick="comment()">Like</button>
+    <button class="button is-link" id="btnLike"  onclick="like()">Like</button>
 </div> 
 <div >
     <textarea rows="4" cols="50"></textarea>
@@ -17,7 +17,7 @@
 </div>
 
 <script>
-    let photoId =  '<%- photos.id %>}'
+    let photoId =  '<%- photos.id %>'
     // $(function() { 
     //     $("#btnComment").click(function() { 
     //         console.log(111)
@@ -40,10 +40,11 @@
     function like(){ 
         $.ajax({
             type: "POST",
-            url: photoId + "/comment",
+            url: photoId + "/like",
             data: '',
             success: function (data) {
-                // console.log(data)
+                 console.log(data.text)
+                 $("#btnLike").html(data.text)
                 // window.location = '/signin'
             }
         })

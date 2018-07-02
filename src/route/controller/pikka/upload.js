@@ -19,6 +19,8 @@ const postHandler = async (ctx) => {
 	}
 	const { caption, detail } = ctx.request.body
 	const fileName = uuidv4()
+	
+	console.log('------ctx.session.userId--------' + ctx.session.userId)
 	await picture.upload(fileName, caption, detail, ctx.session.userId)
 	// console.log('------ctx.session.userId--------')
 	// console.log(ctx.session.userId)

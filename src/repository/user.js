@@ -23,7 +23,7 @@ const register = async (email, password, facebook_user_id, first_name, last_name
 			[ResultSetHeader] = await pool.query(`Update users 
 								set password = ?
 								where email = ? `, [password, email])
-			console.log(ResultSetHeader)
+			// console.log(ResultSetHeader)
 			res = ResultSetHeader.changedRows
 		}		
 		// res = ResultSetHeader.changedRows
