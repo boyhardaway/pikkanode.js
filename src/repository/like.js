@@ -6,7 +6,6 @@ const like = async (userId, pictureId) => {
 			INSERT INTO likes(user_id, picture_id) 
 			VALUES (?, ?)
 	`, [userId, pictureId])
-	
 	return ResultSetHeader
 }
 
@@ -21,7 +20,7 @@ const unLike = async (userId, pictureId) => {
 const findLike = async (userId, pictureId) => {
 	const [rows] = await pool.query(`
 		select count(1) as count From likes where user_id = ? and picture_id = ?
-    `, [userId, pictureId]) 
+	`, [userId, pictureId])  
 	return rows
 }
  

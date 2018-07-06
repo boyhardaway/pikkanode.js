@@ -3,7 +3,8 @@ const pool = require('../db')
 const register = async (email, password, facebook_user_id, first_name, last_name) => {
 	let res
 	let ResultSetHeader 
-    if (await checkHasSignup(email) < 1){ 
+    if (await checkHasSignup(email) < 1){
+		
 	    [ResultSetHeader] = await pool.query(`	
 				INSERT INTO users(email, password,
 				facebook_user_id, firstname, lastname) 

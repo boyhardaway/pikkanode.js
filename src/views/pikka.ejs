@@ -6,8 +6,8 @@
 <div >
     <p> <%- photos.caption %></p>
     <p> <%- photos.id %></p>
-</div >
-    <button class="button is-link" id="btnLike"  onclick="like()">Like</button>
+</div > 
+    <button class="button is-link" id="btnLike"  onclick="like()"><%- likes.text%></button>
 </div> 
 <div >
     <textarea rows="4" cols="50"></textarea>
@@ -43,7 +43,7 @@
             url: photoId + "/like",
             data: '',
             success: function (data) {
-                 console.log(data.text)
+                 console.log('Ejs' + data.text) 
                  $("#btnLike").html(data.text)
                 // window.location = '/signin'
             }
