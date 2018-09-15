@@ -1,31 +1,39 @@
- 
-<div class="control">
-  <form id="formSearch"  > 
-    <input class="input" name="val"  placeholder="Search..."> 
-    <button class="button is-link" type="submit">Search</button>
-  </from>
-</div>
-<% for(let i = 0; i < photos.length; i++){ %>
-  <% if((i % 4) === 0 || i === 0) { %>
-    <div class="row"> 
-  <% } %> 
-    <div class="column">
-    <p> <%- photos[i].caption %></p>
-      <a href=<%- `/pikka/${photos[i].id}`%>><img src=<%- `/-/images/${photos[i].id}` %> alt="Norway" style="width:100%"> </a> 
-    </div> 
-    
-  <% if(((i % 4) === 0 || i === photos.length) && i !== 0) { %>
-    </div> 
-  <% } %>   
-<% } %> 
+<br>
+<form id="formSearch">
+  <div class="columns">
+    <div class="column is-8">
+      <input class="input" name="val" placeholder="Search...">
+    </div>
+    <div class="column is-4">
+      <button class="button is-link" type="submit">Search</button>
+    </div>
+  </div>
+</from>
+<br>
+  <% for(let i = 0; i < photos.length; i++){ %>
+    <% if((i) % 4 === 0 || i === 0) { %>
+      <div class="columns">
+        <% } %>
+          <div class="column is-3">
+            <div class="box" style="width: 300rm; height: 200rm;">
+              <p>
+                <%- photos[i].caption %>
+              </p>
+              <a href=<%- `/pikka/${photos[i].id}`%>>
+                <img src=<%- `/-/images/${photos[i].id}` %> alt="Norway" style="width:100%"> </a>
+            </div>
+          </div>
+          <% if((i+1) % 4 === 0 && i > 0) { %>
+      </div>
+      <% } %>
+        <% } %>
 
-<script>
-  //   $('.input#txtsearch').keypress(function (e) {
-  //     if (e.which == 13) {
-  //       $('form#formSearch').submit()
-  //       alert("AAAA")
-  //     }
-  //   })
-  // })
-
-</script>
+          <script>
+            //   $('.input#txtsearch').keypress(function (e) {
+            //     if (e.which == 13) {
+            //       $('form#formSearch').submit()
+            //       alert("AAAA")
+            //     }
+            //   })
+            // })
+          </script>
