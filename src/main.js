@@ -62,6 +62,7 @@ const stripPrefix = async (ctx, next) => {
 // 	const pieces = str.replace('try to encrypt: ','').replace(keys,'')
 // 	return pieces;
 // }
+<<<<<<< HEAD
 
 // router.post('/api/v1/auth/signup', ctx => {
 // 	ctx.status = 200
@@ -76,6 +77,8 @@ const stripPrefix = async (ctx, next) => {
 // 	ctx.response.body = {userId: 11}
 // }) 
  
+=======
+>>>>>>> d6382e57d9c15b04b455c9b5539724ef24f6b2ae
 
 app.keys = ['supersecretboy']
 app.use(session(sessionConfig, app))
